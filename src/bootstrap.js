@@ -46,7 +46,19 @@ function addToWindow(win) {
   fxAcctMI.setAttribute("label", "Firefox Account");
   fxAcctMI.setAttribute("id", fxacctId);
   // TODO: Hook up chrome tab launch-js.
+  fxAcctMI.addEventListener("command", setup_account, true);
   win.document.getElementById("menu_ToolsPopup").insertBefore(fxAcctMI, win.document.getElementById("devToolsSeparator"));
+}
+
+// Basic chrome window.
+// TODO: Pull out of bootstrap.js.
+// TODO: Make into a chrome tab.
+// TODO: Single instance? Allow multiple sign-in tabs/windows?
+function setup_account() {
+  dump("INFO: function setup_account\n");
+  let ww = Cc["@mozilla.org/embedcomp/window-watcher;1"]
+             .getService(Components.interfaces.nsIWindowWatcher);
+  let win = ww.openWindow(null, "chrome://fxacct/content/sign-in.xhtml", null, null, null);
 }
 
 function shutdown(aData, aReason) {

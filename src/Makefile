@@ -60,7 +60,16 @@ clean:
 
 # The sources for the XPI file.
 xpi_built := install.rdf \
-             bootstrap.js
+             bootstrap.js \
+             chrome.manifest \
+             $(wildcard content/*.js) \
+             $(wildcard content/*.xml) \
+             $(wildcard content/*.xhtml) \
+             $(wildcard content/*.css) \
+             $(wildcard skin/*.css) \
+             $(wildcard skin/*.png) \
+             $(wildcard locale/*/*.dtd) \
+             $(wildcard locale/*/*.properties)
 
 # This builds everything except for the actual XPI, and then it copies it to the
 # specified profile directory, allowing a quick update that requires no install.
