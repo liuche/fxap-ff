@@ -9,6 +9,7 @@ lib-cov
 *~
 *.xpi
 *.orig
+.*.swp
 
 pids
 logs
