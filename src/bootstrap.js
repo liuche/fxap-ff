@@ -9,16 +9,15 @@ const FXA_NS = "FxAcctNS";
 const FXA_LABEL = "Firefox Account";
 const fxacctId = "menu_ToolsFxAcctItem";
 
-function install(aData, aReason) {}
+function install(data, reason) {}
 
 // Setup (startup, enable, install): insert add-on into browser UI, register any
 // listeners, etc
-function startup(aData, aReason) {
+function startup(data, reason) {
   Cu.import("resource://gre/modules/Services.jsm");
-  Services.scriptloader.loadSubScript(aData.resourceURI.spec + "modules/main.js", GLOBAL_SCOPE);
-  dump("creating fx account\n");
-  this.fxAccount = FxAccount();
-  dump("set fxAccount\n");
+  dump("loading module/main\n");
+  Services.scriptloader.loadSubScript(data.resourceURI.spec + "modules/main.js", GLOBAL_SCOPE);
+  dump("loaded\n");
   installOnStartup();
 }
 
@@ -55,17 +54,17 @@ function addToWindow(win) {
   // TODO: Display different text based on account existence.
   fxAcctMI.setAttribute("label", FXA_LABEL);
   fxAcctMI.setAttribute("id", fxacctId);
-  fxAcctMI.addEventListener("command", this.fxAccount.main, true);
+  fxAcctMI.addEventListener("command", FxAccount.main, true);
   dump("accountExists? ");
-  dump(this.fxAccount.accountExists + "\n");
+  dump(FxAccount.accountExists + "\n");
   win.document.getElementById("menu_ToolsPopup").insertBefore(fxAcctMI, win.document.getElementById("devToolsSeparator"));
 }
 
-function shutdown(aData, aReason) {
+function shutdown(data, reason) {
   dump("INFO: Shutting down FxAcct add-on!\n");
   // When the application is shutting down we normally don't have to clean
   // up any UI changes made
-  if (aReason == APP_SHUTDOWN)
+  if (reason == APP_SHUTDOWN)
     return;
 
   // Removal clean-up (disable, uninstall): remove elements from browser, unregister
