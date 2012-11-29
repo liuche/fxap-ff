@@ -7,21 +7,25 @@ let GLOBAL_SCOPE = this;
 
 const FXA_NS = "FxAcctNS";
 const FXA_LABEL = "Firefox Account";
-const fxacctId = "menu_ToolsFxAcctItem";
+const FXA_ID = "menu_ToolsFxAcctItem";
 
 function install(data, reason) {}
 
 // Setup (startup, enable, install): insert add-on into browser UI, register any
 // listeners, etc
 function startup(data, reason) {
+  // Make fxacct modules accessible.
   Cu.import("resource://gre/modules/Services.jsm");
-  dump("loading module/main\n");
-  Services.scriptloader.loadSubScript(data.resourceURI.spec + "modules/main.js", GLOBAL_SCOPE);
-  dump("loaded\n");
+  this.resProtocolHandler = Services.io.getProtocolHandler("resource").QueryInterface(Components.interfaces.nsIResProtocolHandler);
+  resProtocolHandler.setSubstitution("fxacct", data.resourceURI);
+  Cu.import("resource://fxacct/modules/FxAccount.js");
+  this.fxAccount = new FxAccount();
+
   installOnStartup();
 }
 
 function installOnStartup() {
+  dump("installOnStartup()\n");
   // Add menu-item to existing windows.
   let wm = Cc["@mozilla.org/appshell/window-mediator;1"]
              .getService(Ci.nsIWindowMediator);
@@ -49,14 +53,10 @@ this.newWindowListener = {
 
 // Add Firefox Account menu item to a window.
 function addToWindow(win) {
-  dump("INFO: function addToWindow\n");
   let fxAcctMI= win.document.createElementNS(FXA_NS, "menuitem");
-  // TODO: Display different text based on account existence.
-  fxAcctMI.setAttribute("label", FXA_LABEL);
-  fxAcctMI.setAttribute("id", fxacctId);
-  fxAcctMI.addEventListener("command", FxAccount.main, true);
-  dump("accountExists? ");
-  dump(FxAccount.accountExists + "\n");
+  fxAcctMI.setAttribute("label", FXA_LABEL); // TODO: Display different text based on account existence.
+  fxAcctMI.setAttribute("id", FXA_ID);
+  fxAcctMI.addEventListener("command", this.fxAccount.main, true);
   win.document.getElementById("menu_ToolsPopup").insertBefore(fxAcctMI, win.document.getElementById("devToolsSeparator"));
 }
 
@@ -77,10 +77,11 @@ function shutdown(data, reason) {
     unloadFromWindow(domWindow);
   }
   wm.removeListener(this.newWindowListener);
+  this.resProtocolHandler.setSubstitution("fxacct", null);
 }
 
 function unloadFromWindow(win) {
-  let menuItem = win.document.getElementById(fxacctId);
+  let menuItem = win.document.getElementById(FXA_ID);
   menuItem && menuItem.parentNode.removeChild(menuItem);
 }
 

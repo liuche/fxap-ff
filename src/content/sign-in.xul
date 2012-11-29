@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://fxacct/skin/sign-in.css" type="text/css"?>
+
+<page id="setupWizard" title="Sign into Firefox" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  role="application">
+  <script type="text/javascript;version=1.8">
+      Components.utils.import("resource://fxacct/modules/FxAccountManager.js");
+      let fxAccountManager = new FxAccountManager();
+      dump("\ndone\n");
+  </script>
+  <screen id="InitialSigninPage">
+    <vbox align="center">
+    <spacer flex="3"/>
+    <description id="title-signin" class="header">Sign in to Firefox</description>
+    <description style="margin-bottom:20px;">Be awesome!</description>
+      <vbox align="center">
+        <button id="newAccountButton" onclick="fxAccountManager.newAccount()" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
+        <button id="existingAccountButton" onclick="fxAccountManager.signIn()" style="width:150px" label="Sign In"/>
+      </vbox>
+    </vbox>
+  </screen>
+
+  <screen id="BasicSigninPage" collapsed="true">
+    <vbox align="center">
+    <spacer flex="3"/>
+      <description class="header" value="Sign in to Firefox"/>
+      <description style="margin-bottom:20px;" value="Be awesome!"/>
+      <description id="desc-advanced" value="or choose Advanced Sign-In"/>
+      <grid>
+        <columns>
+          <column/>
+          <column/>
+        </columns>
+        <rows>
+          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
+          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
+          <row align="center"><spacer flex="1"/><label value="Forgot Password" class="text-link" href="http://www.mozilla.org"/></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-signin" label="Sign In"/><label value="or"/><label class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
+        </rows>
+      </grid>
+    </vbox>
+  </screen>
+
+  <screen id="AdvancedSigninPage" collapsed="true">
+    <vbox align="center">
+      <spacer flex="3"/>
+      <label class="header" value="Advanced Sign"/>
+      <grid>
+        <columns>
+          <column/>
+          <column/>
+        </columns>
+        <rows>
+          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
+          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
+          <row align="center"><spacer flex="1"/><label value="Forgot Password" class="text-link" href="http://www.mozilla.org"/></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-signin" label="Sign In"/><label value="or"/><label class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
+        </rows>
+      </grid>
+    </vbox>
+  </screen>
+
+  <screen id="SuccessPage" collapsed="true">
+    <vbox align="center">
+      <spacer flex="3"/>
+      <label class="header" value="Welcome!"/>
+      <label style="font-size:14px; font-weight:bold;" value="You are successfully signed in as:"/>
+      <spacer flex="3"/>
+      <description id="label-username" value="user@email.com"/>
+      <button id="button-signout" label="Sign out to disconnect"/>
+      <spacer flex="3"/>
+      <description href="http://mozilla.org">You may close this tab and keep browsing or go to <a>Preferences</a> to manage your account.</description>
+    </vbox>
+  </screen>
+
+  <screen id="CreateAccountPage" collapsed="true">
+    <vbox align="center">
+      <spacer flex="3"/>
+      <label class="header" value="Create Firefox Account"/>
+      <description>A Firefox Account allows you to access your stuff from anywhere!</description>
+      <grid>
+        <columns>
+          <column/>
+          <column/>
+        </columns>
+        <rows>
+          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
+          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
+          <row align="center"><label value="Confirm Password" style="text-align:right" type="password"/><textbox id="input-password-confirm" style="max-width:15em"/></row>
+          <row align="center"><spacer flex="1"/><checkbox label="I agree with Terms of Service and Privacy Policy"/></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-create" label="Create Account"/><label> or </label><description href="http://www.mozilla.org" class="text-link">Sign In</description></hbox></row>
+        </rows>
+      </grid>
+    </vbox>
+  </screen>
+
+  <screen id="ConfirmAccountPage" collapsed="true">
+    <vbox align="center">
+      <label class="header" value="Create Firefox Account"/>
+      <description>Please verify your email by going to your inbox.</description>
+      <spacer flex="3"/>
+      <label href="https://mail.google.com" class="text-link">Gmail</label>
+      <label href="http://mail.yahoo.com" class="text-link">Yahoo!</label>
+      <label href="http://hotmail.com" class="text-link">Hotmail</label>
+    </vbox>
+  </screen>
+</page>
