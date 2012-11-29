@@ -7,12 +7,11 @@
 <?xml-stylesheet href="chrome://fxacct/skin/sign-in.css" type="text/css"?>
 
 <page id="setupWizard" title="Sign into Firefox" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  role="application">
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <script type="text/javascript;version=1.8">
       Components.utils.import("resource://fxacct/modules/FxAccountManager.js");
       let fxAccountManager = new FxAccountManager();
-      dump("\ndone\n");
+      fxAccountManager.init();
   </script>
   <screen id="InitialSigninPage">
     <vbox align="center">

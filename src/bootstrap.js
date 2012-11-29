@@ -16,10 +16,9 @@ function install(data, reason) {}
 function startup(data, reason) {
   // Make fxacct modules accessible.
   Cu.import("resource://gre/modules/Services.jsm");
-  this.resProtocolHandler = Services.io.getProtocolHandler("resource").QueryInterface(Components.interfaces.nsIResProtocolHandler);
+  this.resProtocolHandler = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
   resProtocolHandler.setSubstitution("fxacct", data.resourceURI);
-  Cu.import("resource://fxacct/modules/FxAccount.js");
-  this.fxAccount = new FxAccount();
+  Cu.import("resource://fxacct/modules/main.js");
 
   installOnStartup();
 }
@@ -56,7 +55,7 @@ function addToWindow(win) {
   let fxAcctMI= win.document.createElementNS(FXA_NS, "menuitem");
   fxAcctMI.setAttribute("label", FXA_LABEL); // TODO: Display different text based on account existence.
   fxAcctMI.setAttribute("id", FXA_ID);
-  fxAcctMI.addEventListener("command", this.fxAccount.main, true);
+  fxAcctMI.addEventListener("command", main, true);
   win.document.getElementById("menu_ToolsPopup").insertBefore(fxAcctMI, win.document.getElementById("devToolsSeparator"));
 }
 
