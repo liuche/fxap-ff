@@ -19,8 +19,8 @@
     <description id="title-signin" class="header">Sign in to Firefox</description>
     <description style="margin-bottom:20px;">Be awesome!</description>
       <vbox align="center">
-        <button id="newAccountButton" onclick="fxAccountSetup.newAccount()" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
-        <button id="existingAccountButton" onclick="fxAccountSetup.signIn()" style="width:150px" label="Sign In"/>
+        <button id="buttonNewAccount" oncommand="fxAccountSetup.onclick(event.target);" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
+        <button id="buttonExistingAccount" oncommand="fxAccountSetup.onclick(event.target);" style="width:150px" label="Sign In"/>
       </vbox>
     </vbox>
   </screen>
@@ -30,7 +30,7 @@
     <spacer flex="3"/>
       <description class="header" value="Sign in to Firefox"/>
       <description style="margin-bottom:20px;" value="Be awesome!"/>
-      <description id="desc-advanced" value="or choose Advanced Sign-In"/>
+      <description value="or choose"/><description id="linkAdvSignin" class="text-link" value="Advanced Sign-In"/>
       <grid>
         <columns>
           <column/>
@@ -39,8 +39,8 @@
         <rows>
           <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
           <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
-          <row align="center"><spacer flex="1"/><label value="Forgot Password" class="text-link" href="http://www.mozilla.org"/></row>
-          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-signin" label="Sign In"/><label value="or"/><label class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
+          <row align="center"><spacer flex="1"/><label id="linkForgotPassword" class="text-link" value="Forgot Password" href="http://www.mozilla.org"/></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonSignIn" label="Sign In"/><label value="or"/><label id="linkCreateAccount" class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
         </rows>
       </grid>
     </vbox>
@@ -58,8 +58,8 @@
         <rows>
           <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
           <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
-          <row align="center"><spacer flex="1"/><label value="Forgot Password" class="text-link" href="http://www.mozilla.org"/></row>
-          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-signin" label="Sign In"/><label value="or"/><label class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
+          <row align="center"><spacer flex="1"/><label id="linkForgotPassword" value="Forgot Password" class="text-link" href="http://www.mozilla.org"/></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonSigninAdvanced" label="Sign In"/><label value="or"/><label id="linkCreateAccount" class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
         </rows>
       </grid>
     </vbox>
@@ -72,7 +72,7 @@
       <label style="font-size:14px; font-weight:bold;" value="You are successfully signed in as:"/>
       <spacer flex="3"/>
       <description id="label-username" value="user@email.com"/>
-      <button id="button-signout" label="Sign out to disconnect"/>
+      <button id="buttonSignout" label="Sign out to disconnect"/>
       <spacer flex="3"/>
       <description href="http://mozilla.org">You may close this tab and keep browsing or go to <a>Preferences</a> to manage your account.</description>
     </vbox>
@@ -93,7 +93,7 @@
           <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
           <row align="center"><label value="Confirm Password" style="text-align:right" type="password"/><textbox id="input-password-confirm" style="max-width:15em"/></row>
           <row align="center"><spacer flex="1"/><checkbox label="I agree with Terms of Service and Privacy Policy"/></row>
-          <row align="center"><spacer flex="1"/><hbox align="center"><button id="button-create" label="Create Account"/><label> or </label><description href="http://www.mozilla.org" class="text-link">Sign In</description></hbox></row>
+          <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonCreate" label="Create Account"/><label> or </label><description id="linkSignIn" href="http://www.mozilla.org" class="text-link">Sign In</description></hbox></row>
         </rows>
       </grid>
     </vbox>
