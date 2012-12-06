@@ -9,9 +9,9 @@
 <page id="setupWizard" title="Sign into Firefox" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <script type="text/javascript;version=1.8">
-      Components.utils.import("resource://fxacct/modules/FxAccountManager.js");
-      let fxAccountManager = new FxAccountManager();
-      fxAccountManager.init();
+      Components.utils.import("resource://fxacct/modules/FxAccountSetup.js");
+      let fxAccountSetup= new FxAccountSetup();
+      fxAccountSetup.init();
   </script>
   <screen id="InitialSigninPage">
     <vbox align="center">
@@ -19,8 +19,8 @@
     <description id="title-signin" class="header">Sign in to Firefox</description>
     <description style="margin-bottom:20px;">Be awesome!</description>
       <vbox align="center">
-        <button id="newAccountButton" onclick="fxAccountManager.newAccount()" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
-        <button id="existingAccountButton" onclick="fxAccountManager.signIn()" style="width:150px" label="Sign In"/>
+        <button id="newAccountButton" onclick="fxAccountSetup.newAccount()" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
+        <button id="existingAccountButton" onclick="fxAccountSetup.signIn()" style="width:150px" label="Sign In"/>
       </vbox>
     </vbox>
   </screen>

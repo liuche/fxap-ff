@@ -17,8 +17,13 @@ function startup(data, reason) {
   // Make fxacct modules accessible.
   Cu.import("resource://gre/modules/Services.jsm");
   this.resProtocolHandler = Services.io.getProtocolHandler("resource").QueryInterface(Ci.nsIResProtocolHandler);
+  dump("res handler\n");
   resProtocolHandler.setSubstitution("fxacct", data.resourceURI);
-  Cu.import("resource://fxacct/modules/main.js");
+  dump("cuimport\n");
+  dump(data.resourceURI + "\n");
+  dump("dumped resource URI, importing...\n");
+  Cu.import("resource://fxacct/modules/FxAccountSetup.js");
+  dump("imported\n");
 
   installOnStartup();
 }
