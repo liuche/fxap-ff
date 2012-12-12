@@ -16,7 +16,7 @@ const CONFIRM_PAGE = 5;
 const pageIds = ["InitialSigninPage", "BasicSigninPage", "AdvancedSigninPage", "SuccessPage", "CreateAccountPage", "ConfirmAccountPage"];
 
 const flowGraph = {"buttonNewAccount" : CREATE_PAGE,
-                   "buttonExistingAcount" : BASIC_SIGNIN,
+                   "buttonExistingAccount" : BASIC_SIGNIN,
                    "linkAdvSignin" : ADV_SIGNIN,
                    "buttonSignIn" : 3,
                    "linkForgotPassword" : 0,
@@ -31,11 +31,12 @@ let window;
 let fxAccountSetup;
 
 function main() {
-  dump("new fxAccountSetup\n");
   // Launch FxAccount Sign-In screen.
+  dump("opening tab\n");
   window = openAndReuseOneTab("chrome://fxacct/content/sign-in.xul");
+  dump("new fxAccountSetup\n");
   fxAccountSetup = new FxAccountSetup();
-  fxAccountSetup.initListeners(window);
+  fxAccountSetup.addListeners(window);
 }
 
 this.FxAccountSetup = function FxAccountSetup() {
@@ -68,19 +69,17 @@ FxAccountSetup.prototype = {
     dump(element.id + "clicked!\n");
     let doc = window.gBrowser.contentDocument;
     dump("contentDoc: " + doc + "\n");
+    this._advance(element.id);
   },
-  signIn: function signIn(element) {
-    dump("signin() ");
-    dump(element.getAttribute("id") + "\n");
-    dump("dumped\n");
-    this._displayPage(BASIC_SIGNIN);
-  },
-  newAccount: function newAccount(event) {
-    dump("newAccount() ");
-    dump(event.name + "\n");
-    dump("dumped\n");
-    dump(this.document.getElementById(pageIds[BASIC_SIGNIN]).collapsed);
-    this._displayPage(CREATE_PAGE);
+  _advance: function _advance(elementid) {
+    dump("advancing from " + elementid + "\n");
+    // TODO: handle validation, additional behavior between pages.
+    if (!flowGraph[elementid]) {
+      dump("cannot advance - property doesn't exist!\n");
+      return;
+    }
+    dump("displaying " + flowGraph[elementid] + "\n");
+    this._displayPage(flowGraph[elementid]);
   },
   _displayPage: function _displayPage(index) {
     // hack - onload and pageshow callbacks fire before elements are created.
