@@ -31,10 +31,11 @@ let window;
 let fxAccountSetup;
 
 function main() {
+  Cu.import("resource://fxacct/modules/utils.js");
   // Launch FxAccount Sign-In screen.
-  dump("opening tab\n");
+  debug("opening tab");
   window = openAndReuseOneTab("chrome://fxacct/content/sign-in.xul");
-  dump("new fxAccountSetup\n");
+  debug("new fxAccountSetup");
   fxAccountSetup = new FxAccountSetup();
   fxAccountSetup.addListeners(window);
 }
@@ -51,34 +52,34 @@ FxAccountSetup.prototype = {
     this.addListeners();
   },
   onPageLoaded: function onPageLoaded(aEvent) {
-    dump("onload callback\n");
+    debug("onload callback");
     // Set current page.
-    dump("testing window doc: " + window.gBrowser.contentDocument + "\n");
+    debug("testing window doc: " + window.gBrowser.contentDocument);
     this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
     this.selectedTab = window.gBrowser.selectedTab;
-    dump("currentPage: " + this.currentPage + "\n");
-    dump("selectedTab:" + this.selectedTab + "\n");
-    dump("onLoad done\n");
+    debug("currentPage: " + this.currentPage);
+    debug("selectedTab:" + this.selectedTab);
+    debug("onLoad done");
   },
   addListeners: function addListeners() {
-    dump("initListeners()\n");
+    debug("initListeners()");
     window.gBrowser.selectedTab.addEventListener("pageshow", this.onPageLoaded.call(this), false);
-    dump("done\n");
+    debug("done");
   },
   onclick: function onclick(element) {
-    dump(element.id + "clicked!\n");
+    debug(element.id + "clicked!");
     let doc = window.gBrowser.contentDocument;
-    dump("contentDoc: " + doc + "\n");
+    debug("contentDoc: " + doc);
     this._advance(element.id);
   },
   _advance: function _advance(elementid) {
-    dump("advancing from " + elementid + "\n");
+    debug("advancing from " + elementid);
     // TODO: handle validation, additional behavior between pages.
     if (!flowGraph[elementid]) {
-      dump("cannot advance - property doesn't exist!\n");
+      debug("cannot advance - property doesn't exist!");
       return;
     }
-    dump("displaying " + flowGraph[elementid] + "\n");
+    debug("displaying " + flowGraph[elementid]);
     this._displayPage(flowGraph[elementid]);
   },
   _displayPage: function _displayPage(index) {
@@ -86,15 +87,15 @@ FxAccountSetup.prototype = {
     if (this.currentPage == null) {
      this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
     }
-    dump("getting " + pageIds[index] + "\n");
+    debug("getting " + pageIds[index]);
     this.currentPage.collapsed = true;
     this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[index]);
     this.currentPage.collapsed = false;
-    dump("showing page " + index + "\n");
+    debug("showing page " + index);
   },
 };
 function test() {
-  dump("calling test() function\n");
+  debug("calling test() function");
 }
 /**
  * Reuse tab containing the URL if it exists; otherwise, open in a new tab.
@@ -120,8 +121,8 @@ function openAndReuseOneTab(url) {
         // Focus *this* browser-window
         browserWin.focus();
         found = true;
-        dump("found tab - opening\n");
-        dump("browserWin " + browserWin + "\n");
+        debug("found tab - opening");
+        debug("browserWin " + browserWin);
         return browserWin;
       }
     }
@@ -132,15 +133,15 @@ function openAndReuseOneTab(url) {
     if (recentWindow) {
       // Use an existing browser window
       recentWindow.delayedOpenTab(url, null, null, null, null);
-      dump("recentWindow ");
-      dump(recentWindow + "\n");
+      debug("recentWindow");
+      debug(recentWindow);
       return recentWindow;
     }
     else {
       // TODO: No browser windows are open, so open a new one.
       // Can't do this in an extension, because the FxAccount menu item
       // entry point is added to browser windows. No window = no menu item.
-      dump("no windows open.\n");
+      debug("no windows open.");
     }
   }
   return null;

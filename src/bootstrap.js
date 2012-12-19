@@ -23,13 +23,14 @@ function startup(data, reason) {
   dump(data.resourceURI + "\n");
   dump("dumped resource URI, importing...\n");
   Cu.import("resource://fxacct/modules/FxAccountSetup.js");
-  dump("imported\n");
+  Cu.import("resource://fxacct/modules/utils.js");
+  debug("imported", "INIT");
 
   installOnStartup();
 }
 
 function installOnStartup() {
-  dump("installOnStartup()\n");
+  debug("installOnStartup()");
   // Add menu-item to existing windows.
   let wm = Cc["@mozilla.org/appshell/window-mediator;1"]
              .getService(Ci.nsIWindowMediator);
@@ -65,7 +66,7 @@ function addToWindow(win) {
 }
 
 function shutdown(data, reason) {
-  dump("INFO: Shutting down FxAcct add-on!\n");
+  debug("Shutting down FxAcct add-on!", INFO);
   // When the application is shutting down we normally don't have to clean
   // up any UI changes made
   if (reason == APP_SHUTDOWN)
