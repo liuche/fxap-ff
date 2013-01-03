@@ -16,11 +16,17 @@
   <screen id="InitialSigninPage">
     <vbox align="center">
     <spacer flex="3"/>
-    <description id="title-signin" class="header">Sign in to Firefox</description>
-    <description style="margin-bottom:20px;">Be awesome!</description>
+    <description id="title-signin" class="header" value="Sign in to Firefox"/>
+    <description class="desc-margin" value="Be awesome!"/>
       <vbox align="center">
-        <button id="buttonNewAccount" oncommand="fxAccountSetup.onclick(event.target);" style="width: 150px; margin-bottom: 10px;" label="Create New Account"/>
-        <button id="buttonExistingAccount" oncommand="fxAccountSetup.onclick(event.target);" style="width:150px" label="Sign In"/>
+        <button id="buttonNewAccount"
+          class="button-fxacct withMargin"
+          label="Create New Account"
+          oncommand="fxAccountSetup.onClick(event.target);"/>
+        <button id="buttonExistingAccount"
+          class="button-fxacct"
+          label="Sign In"
+          oncommand="fxAccountSetup.onClick(event.target);"/>
       </vbox>
     </vbox>
   </screen>
@@ -28,19 +34,48 @@
   <screen id="BasicSigninPage" collapsed="true">
     <vbox align="center">
     <spacer flex="3"/>
-      <description class="header" value="Sign in to Firefox"/>
-      <description style="margin-bottom:20px;" value="Be awesome!"/>
-      <hbox><description value="or choose"/><description id="linkAdvSignin" class="text-link" value="Advanced Sign-In"/></hbox>
-      <grid>
-        <columns>
-          <column/>
-          <column/>
-        </columns>
-        <rows>
-          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
-          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
-          <row align="center"><spacer flex="1"/><label id="linkForgotPassword" class="text-link" value="Forgot Password" href="http://www.mozilla.org"/></row>
-        <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonSignIn" label="Sign In" oncommand="fxAccountSetup.onclick(event.target);"/><label value="or"/><label id="linkCreateAccount" class="text-link" value="Create a Firefox Account" command="fxAccountSetup.onclick(event.target);"/></hbox></row>
+    <description class="header" value="Sign in to Firefox"/>
+    <description class="desc-margin" value="Be awesome!"/>
+    <hbox>
+      <description value="or choose"/>
+      <description id="linkAdvSignin" class="text-link" value="Advanced Sign-In"/>
+    </hbox>
+    <grid>
+      <columns>
+        <column/>
+        <column/>
+      </columns>
+      <rows>
+        <row align="center">
+          <label value="Email" class="label-row"/>
+          <textbox id="input-email" class="textbox-row"/>
+        </row>
+        <row align="center">
+          <label value="Password" class="label-row"/>
+          <textbox id="input-password"
+            class="textbox-row"
+            type="password"/>
+        </row>
+        <row align="center">
+          <spacer flex="1"/>
+          <label id="linkForgotPassword"
+            class="text-link"
+            value="Forgot Password"
+            href="http://www.mozilla.org"/>
+        </row>
+        <row align="center">
+          <spacer flex="1"/>
+          <hbox align="center">
+            <button id="buttonSignIn"
+              label="Sign In"
+              oncommand="fxAccountSetup.onClick(event.target);"/>
+            <label value="or"/>
+            <label id="linkCreateAccount"
+              class="text-link"
+              value="Create a Firefox Account"
+              command="fxAccountSetup.onClick(event.target);"/>
+          </hbox>
+        </row>
       </rows>
       </grid>
     </vbox>
@@ -56,10 +91,34 @@
           <column/>
         </columns>
         <rows>
-          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
-          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
-          <row align="center"><spacer flex="1"/><label id="linkForgotPassword" value="Forgot Password" class="text-link" oncommand="fxAccountSetup.onclick(event.target);"/></row>
-          <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonSigninAdvanced" label="Sign In" oncommand="fxAccountSetup.onclick(event.target);"/><label value="or"/><label id="linkCreateAccount" class="text-link" value="Create a Firefox Account" href="http://www.mozilla.org"/></hbox></row>
+          <row align="center">
+            <label value="Email" class="label-row"/>
+            <textbox id="input-email" class="textbox-row"/>
+          </row>
+          <row align="center">
+            <label value="Password" style="text-align:right"/>
+            <textbox id="input-password" class="textbox-row" type="password"/>
+          </row>
+          <row align="center">
+            <spacer flex="1"/>
+            <label id="linkForgotPassword"
+              class="text-link"
+              value="Forgot Password"
+              oncommand="fxAccountSetup.onClick(event.target);"/>
+          </row>
+          <row align="center">
+            <spacer flex="1"/>
+            <hbox align="center">
+              <button id="buttonSigninAdvanced"
+                label="Sign In"
+                oncommand="fxAccountSetup.onClick(event.target);"/>
+              <label value="or"/>
+              <label id="linkCreateAccount"
+                class="text-link"
+                value="Create a Firefox Account"
+                href="http://www.mozilla.org"/>
+          </hbox>
+        </row>
         </rows>
       </grid>
     </vbox>
@@ -69,12 +128,14 @@
     <vbox align="center">
       <spacer flex="3"/>
       <label class="header" value="Welcome!"/>
-      <label style="font-size:14px; font-weight:bold;" value="You are successfully signed in as:"/>
+      <label class="header" value="You are successfully signed in as:"/>
       <spacer flex="3"/>
       <description id="label-username" value="user@email.com"/>
-      <button id="buttonSignout" label="Sign out to disconnect" oncommand="fxAccountSetup.onclick(event.target);"/>
+      <button id="buttonSignout"
+        label="Sign out to disconnect"
+        oncommand="fxAccountSetup.onClick(event.target);"/>
       <spacer flex="3"/>
-      <description href="http://mozilla.org">You may close this tab and keep browsing or go to <a>Preferences</a> to manage your account.</description>
+      <description href="http://mozilla.org" value="You may close this tab and keep browsing or go to Preferences to manage your account."/>
     </vbox>
   </screen>
 
@@ -82,18 +143,37 @@
     <vbox align="center">
       <spacer flex="3"/>
       <label class="header" value="Create Firefox Account"/>
-      <description>A Firefox Account allows you to access your stuff from anywhere!</description>
+      <description value="A Firefox Account allows you to access your stuff from anywhere!"/>
       <grid>
         <columns>
           <column/>
           <column/>
         </columns>
         <rows>
-          <row align="center"><label value="Email" style="text-align:right"/><textbox pack="start" id="input-email" style="max-width:15em"/></row>
-          <row align="center"><label value="Password" style="text-align:right" type="password"/><textbox id="input-password" style="max-width:15em"/></row>
-          <row align="center"><label value="Confirm Password" style="text-align:right" type="password"/><textbox id="input-password-confirm" style="max-width:15em"/></row>
-          <row align="center"><spacer flex="1"/><checkbox label="I agree with Terms of Service and Privacy Policy"/></row>
-          <row align="center"><spacer flex="1"/><hbox align="center"><button id="buttonCreate" label="Create Account" onclick="fxAccountSetup.onclick(event.target);"/><label> or </label><description id="linkSignIn" command="alert('clicked!'); fxAccountSetup.onclick(event.target);" class="text-link">Sign In</description></hbox></row>
+          <row align="center">
+            <label value="Email" class="label-row"/>
+            <textbox id="input-email" class="textbox-row"/>
+          </row>
+          <row align="center">
+            <label value="Password" class="label-row"/>
+            <textbox id="input-password" class="textbox-row" type="password"/>
+          </row>
+          <row align="center">
+            <label value="Confirm Password" class="label-row"/>
+            <textbox id="input-password-confirm" class="textbox-row" type="password"/>
+          </row>
+          <row align="center">
+            <spacer flex="1"/>
+            <checkbox label="I agree with Terms of Service and Privacy Policy"/>
+          </row>
+          <row align="center">
+            <spacer flex="1"/>
+            <hbox align="center">
+              <button id="buttonCreate" label="Create Account" oncommand="fxAccountSetup.onClick(event.target);"/>
+              <label> or </label>
+              <description id="linkSignIn" oncommand="alert('clicked!'); fxAccountSetup.onClick(event.target);" class="text-link" value="Sign In"/>
+          </hbox>
+        </row>
         </rows>
       </grid>
     </vbox>
@@ -102,7 +182,7 @@
   <screen id="ConfirmAccountPage" collapsed="true">
     <vbox align="center">
       <label class="header" value="Create Firefox Account"/>
-      <description>Please verify your email by going to your inbox.</description>
+      <description value="Please verify your email by going to your inbox."/>
       <spacer flex="3"/>
       <label href="https://mail.google.com" class="text-link">Gmail</label>
       <label href="http://mail.yahoo.com" class="text-link">Yahoo!</label>

@@ -6,11 +6,11 @@ this.EXPORTED_SYMBOLS = ['FxAccountSetup', 'main'];
 const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 // Page constants.
-const INIT_SIGNIN = 0;
+const INIT_SIGNIN  = 0;
 const BASIC_SIGNIN = 1;
-const ADV_SIGNIN = 2;
+const ADV_SIGNIN   = 2;
 const SUCCESS_PAGE = 3;
-const CREATE_PAGE = 4;
+const CREATE_PAGE  = 4;
 const CONFIRM_PAGE = 5;
 
 const pageIds = ["InitialSigninPage", "BasicSigninPage", "AdvancedSigninPage", "SuccessPage", "CreateAccountPage", "ConfirmAccountPage"];
@@ -37,7 +37,7 @@ function main() {
   window = openAndReuseOneTab("chrome://fxacct/content/sign-in.xul");
   debug("new fxAccountSetup");
   fxAccountSetup = new FxAccountSetup();
-  fxAccountSetup.addListeners(window);
+  fxAccountSetup.initialize();
 }
 
 this.FxAccountSetup = function FxAccountSetup() {
@@ -47,42 +47,36 @@ this.FxAccountSetup = function FxAccountSetup() {
 };
 
 FxAccountSetup.prototype = {
-  init: function init(window) {
+  initialize: function initialize(window) {
     this.window = window;
     this.addListeners();
+    // Add listeners.
+    let self = this;
+    window.gBrowser.selectedTab.addEventListener("onload", function onLoad(self) {
+      debug("onload callback");
+      // Set current page.
+      // TODO: why is element still null after onload?
+      self.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
+      debug("currentPage:" + self.currentPage);
+      self.selectedTab = window.gBrowser.selectedTab;
+      debug("onLoad done");
+    }, false);
   },
-  onPageLoaded: function onPageLoaded(aEvent) {
-    debug("onload callback");
-    // Set current page.
-    debug("testing window doc: " + window.gBrowser.contentDocument);
-    this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
-    this.selectedTab = window.gBrowser.selectedTab;
-    debug("currentPage: " + this.currentPage);
-    debug("selectedTab:" + this.selectedTab);
-    debug("onLoad done");
-  },
-  addListeners: function addListeners() {
-    debug("initListeners()");
-    window.gBrowser.selectedTab.addEventListener("pageshow", this.onPageLoaded.call(this), false);
-    debug("done");
-  },
-  onclick: function onclick(element) {
-    debug(element.id + "clicked!");
-    let doc = window.gBrowser.contentDocument;
-    debug("contentDoc: " + doc);
-    this._advance(element.id);
-  },
-  _advance: function _advance(elementid) {
+
+  advance: function advance(elementid) {
     debug("advancing from " + elementid);
     // TODO: handle validation, additional behavior between pages.
-    if (!flowGraph[elementid]) {
+    debug(flowGraph[elementid]);
+    if (flowGraph[elementid] == null) {
       debug("cannot advance - property doesn't exist!");
       return;
     }
+    // TODO: handle history
     debug("displaying " + flowGraph[elementid]);
-    this._displayPage(flowGraph[elementid]);
+    this._displayView(flowGraph[elementid]);
   },
-  _displayPage: function _displayPage(index) {
+
+  _displayView: function _displayView(index) {
     // hack - onload and pageshow callbacks fire before elements are created.
     if (this.currentPage == null) {
      this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
@@ -93,10 +87,14 @@ FxAccountSetup.prototype = {
     this.currentPage.collapsed = false;
     debug("showing page " + index);
   },
+
+  // Listeners.
+  onClick: function onClick(element) {
+    debug(element.id + "clicked!");
+    this.advance(element.id);
+  },
 };
-function test() {
-  debug("calling test() function");
-}
+
 /**
  * Reuse tab containing the URL if it exists; otherwise, open in a new tab.
  * Returns the browser window containing new tab, or null if no windows exist.

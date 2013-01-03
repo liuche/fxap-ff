@@ -10,6 +10,28 @@ screen {
 }
 
 .header {
-  font-size: 14px;
+  font-size: 1.5em;
   font-weight: bold;
+}
+
+.description-margin {
+  margin-bottom: 20px;
+}
+
+.button-fxacct {
+  width: 14em;
+}
+
+.withMargin {
+  margin: 10px;
+}
+
+/* Row styling */
+.label-row {
+  text-align: right;
+}
+
+.textbox-row {
+  -moz-box-pack: start;
+  max-width: 15em;
 }
