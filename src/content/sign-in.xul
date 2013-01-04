@@ -37,8 +37,11 @@
     <description class="header" value="Sign in to Firefox"/>
     <description class="desc-margin" value="Be awesome!"/>
     <hbox>
-      <description value="or choose"/>
-      <description id="linkAdvSignin" class="text-link" value="Advanced Sign-In"/>
+      <description value="or choose "/>
+      <a id="linkAdvSignin"
+        class="a-link"
+        href="#"
+        onclick="fxAccountSetup.onClick(event.target);">Advanced Sign-In</a>
     </hbox>
     <grid>
       <columns>
@@ -58,10 +61,10 @@
         </row>
         <row align="center">
           <spacer flex="1"/>
-          <label id="linkForgotPassword"
-            class="text-link"
-            value="Forgot Password"
-            href="http://www.mozilla.org"/>
+          <a id="linkForgotPassword"
+            class="a-link"
+            href="#"
+            onclick="fxAccountSetup.onClick(event.target);">Forgot Password</a>
         </row>
         <row align="center">
           <spacer flex="1"/>
@@ -70,10 +73,10 @@
               label="Sign In"
               oncommand="fxAccountSetup.onClick(event.target);"/>
             <label value="or"/>
-            <label id="linkCreateAccount"
-              class="text-link"
-              value="Create a Firefox Account"
-              command="fxAccountSetup.onClick(event.target);"/>
+            <a id="linkCreateAccount"
+              class="a-link"
+              href="#"
+              onclick="fxAccountSetup.onClick(event.target);">Create a Firefox Account</a>
           </hbox>
         </row>
       </rows>
@@ -101,22 +104,22 @@
           </row>
           <row align="center">
             <spacer flex="1"/>
-            <label id="linkForgotPassword"
-              class="text-link"
-              value="Forgot Password"
-              oncommand="fxAccountSetup.onClick(event.target);"/>
+            <a id="linkForgotPassword"
+              class="a-link"
+              href="#"
+              onclick="fxAccountSetup.onClick(event.target);">Forgot Password</a>
           </row>
           <row align="center">
             <spacer flex="1"/>
             <hbox align="center">
-              <button id="buttonSigninAdvanced"
+              <button id="buttonSigninAdv"
                 label="Sign In"
                 oncommand="fxAccountSetup.onClick(event.target);"/>
               <label value="or"/>
-              <label id="linkCreateAccount"
-                class="text-link"
-                value="Create a Firefox Account"
-                href="http://www.mozilla.org"/>
+              <a id="linkCreateAccount"
+                class="a-link"
+                href="#"
+                onclick="fxAccountSetup.onClick(event.target);">Create a Firefox Account</a>
           </hbox>
         </row>
         </rows>
@@ -126,16 +129,17 @@
 
   <screen id="SuccessPage" collapsed="true">
     <vbox align="center">
-      <spacer flex="3"/>
       <label class="header" value="Welcome!"/>
       <label class="header" value="You are successfully signed in as:"/>
-      <spacer flex="3"/>
-      <description id="label-username" value="user@email.com"/>
+      <description id="label-username" class="description-margin" value="user@email.com"/>
       <button id="buttonSignout"
         label="Sign out to disconnect"
         oncommand="fxAccountSetup.onClick(event.target);"/>
-      <spacer flex="3"/>
-      <description href="http://mozilla.org" value="You may close this tab and keep browsing or go to Preferences to manage your account."/>
+      <description value="You may close this tab and keep browsing or go to "/>
+      <hbox>
+        <a id="linkPrefs" class="a-link" href="#">Preferences</a>
+        <description value=" to manage your account."/>
+      </hbox>
     </vbox>
   </screen>
 
@@ -164,14 +168,22 @@
           </row>
           <row align="center">
             <spacer flex="1"/>
-            <checkbox label="I agree with Terms of Service and Privacy Policy"/>
+            <hbox align="center">
+              <checkbox id="checkbox-terms" label="I agree with" checked="false"/>
+              <a class="a-link" href="http://www.mozilla.com">Terms of Service</a>
+              <label> and </label>
+              <a class="a-link" href="http://www.mozilla.org">Privacy Policy</a>
+            </hbox>
           </row>
           <row align="center">
             <spacer flex="1"/>
             <hbox align="center">
               <button id="buttonCreate" label="Create Account" oncommand="fxAccountSetup.onClick(event.target);"/>
               <label> or </label>
-              <description id="linkSignIn" oncommand="alert('clicked!'); fxAccountSetup.onClick(event.target);" class="text-link" value="Sign In"/>
+              <a id="linkSignIn"
+                class="a-link"
+                href="#"
+                onclick="fxAccountSetup.onClick(event.target);">Sign In</a>
           </hbox>
         </row>
         </rows>

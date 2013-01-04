@@ -19,6 +19,7 @@ const flowGraph = {"buttonNewAccount" : CREATE_PAGE,
                    "buttonExistingAccount" : BASIC_SIGNIN,
                    "linkAdvSignin" : ADV_SIGNIN,
                    "buttonSignIn" : 3,
+                   "buttonSignInAdv" : 0,
                    "linkForgotPassword" : 0,
                    "linkCreateAccount" : CREATE_PAGE,
                    "buttonSigninAdv" : ADV_SIGNIN,
@@ -41,14 +42,12 @@ function main() {
 }
 
 this.FxAccountSetup = function FxAccountSetup() {
-  this.window = null;
   this.selectedTab = null;
   this.currentPage = null;
 };
 
 FxAccountSetup.prototype = {
   initialize: function initialize(window) {
-    this.window = window;
     this.addListeners();
     // Add listeners.
     let self = this;

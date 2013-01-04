@@ -35,3 +35,12 @@ screen {
   -moz-box-pack: start;
   max-width: 15em;
 }
+
+/* Link styling */
+.a-link {
+  color: -moz-hyperlinktext;
+}
+.a-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
