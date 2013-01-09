@@ -51,11 +51,11 @@
       <rows>
         <row align="center">
           <label value="Email" class="label-row"/>
-          <textbox id="input-email" class="textbox-row"/>
+          <textbox id="input-email-basic" class="textbox-row"/>
         </row>
         <row align="center">
           <label value="Password" class="label-row"/>
-          <textbox id="input-password"
+          <textbox id="input-password-basic"
             class="textbox-row"
             type="password"/>
         </row>
@@ -96,11 +96,11 @@
         <rows>
           <row align="center">
             <label value="Email" class="label-row"/>
-            <textbox id="input-email" class="textbox-row"/>
+            <textbox id="input-email-adv" class="textbox-row"/>
           </row>
           <row align="center">
             <label value="Password" style="text-align:right"/>
-            <textbox id="input-password" class="textbox-row" type="password"/>
+            <textbox id="input-password-adv" class="textbox-row" type="password"/>
           </row>
           <row align="center">
             <spacer flex="1"/>
@@ -156,11 +156,11 @@
         <rows>
           <row align="center">
             <label value="Email" class="label-row"/>
-            <textbox id="input-email" class="textbox-row"/>
+            <textbox id="input-email-create" class="textbox-row"/>
           </row>
           <row align="center">
             <label value="Password" class="label-row"/>
-            <textbox id="input-password" class="textbox-row" type="password"/>
+            <textbox id="input-password-create" class="textbox-row" type="password"/>
           </row>
           <row align="center">
             <label value="Confirm Password" class="label-row"/>

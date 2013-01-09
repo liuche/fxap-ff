@@ -55,7 +55,7 @@ FxAccountSetup.prototype = {
       debug("onload callback");
       // Set current page.
       // TODO: why is element still null after onload?
-      self.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
+      self.currentPage = this.getElement(pageIds[0]);
       debug("currentPage:" + self.currentPage);
       self.selectedTab = window.gBrowser.selectedTab;
       debug("onLoad done");
@@ -72,25 +72,78 @@ FxAccountSetup.prototype = {
     }
     // TODO: handle history
     debug("displaying " + flowGraph[elementid]);
+    // TODO: add validation listeners, remove previous listeners?
     this._displayView(flowGraph[elementid]);
   },
 
   _displayView: function _displayView(index) {
-    // hack - onload and pageshow callbacks fire before elements are created.
-    if (this.currentPage == null) {
-     this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[0]);
-    }
     debug("getting " + pageIds[index]);
     this.currentPage.collapsed = true;
-    this.currentPage = window.gBrowser.contentDocument.getElementById(pageIds[index]);
+    this.currentPage = this.getElement(pageIds[index]);
     this.currentPage.collapsed = false;
     debug("showing page " + index);
   },
 
   // Listeners.
   onClick: function onClick(element) {
-    debug(element.id + "clicked!");
+    debug(element.id + " clicked!");
+
+    // hack - onload and pageshow callbacks fire before elements are created.
+    if (this.currentPage == null) {
+     this.currentPage = this.getElement(pageIds[0]);
+    }
+
+    let pageId = pageIds.indexOf(this.currentPage.id);
+    let usernameField;
+    let passwordField;
+
+    switch(pageId) {
+      case BASIC_SIGNIN:
+        debug("basic signin");
+        usernameField = this.getElement("input-email-basic");
+        passwordField = this.getElement("input-password-basic");
+        // Do something with the fields.
+        debug(usernameField.value);
+        debug(passwordField.value);
+        // Clear fields.
+        usernameField.value = "";
+        passwordField.value = "";
+        break;
+
+      case ADV_SIGNIN:
+        debug("adv signin");
+        usernameField = this.getElement("input-email-adv");
+        passwordField = this.getElement("input-password-adv");
+        // Do something with the fields.
+        debug(usernameField.value);
+        debug(passwordField.value);
+        // Clear fields.
+        usernameField.value = "";
+        passwordField.value = "";
+        break;
+
+      case CREATE_PAGE:
+        debug("create page");
+        usernameField = this.getElement("input-email-create");
+        passwordField = this.getElement("input-password-create");
+        // Do something with the fields.
+        debug(usernameField.value);
+        debug(passwordField.value);
+        // Clear fields.
+        usernameField.value = "";
+        passwordField.value = "";
+        this.getElement("input-password-confirm").value = "";
+        break;
+
+      case SUCCESS_PAGE: // Do nothing.
+      default:
+        debug("nothing to be done");
+    }
+
     this.advance(element.id);
+  },
+  getElement: function getElement(id) {
+    return window.gBrowser.contentDocument.getElementById(id);
   },
 };
 
