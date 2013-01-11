@@ -87,7 +87,8 @@
   <screen id="AdvancedSigninPage" collapsed="true">
     <vbox align="center">
       <spacer flex="3"/>
-      <label class="header" value="Advanced Sign"/>
+      <label class="header" value="Advanced Sign In"/>
+      <label value="Advanced: Select what to Sync."/>
       <grid>
         <columns>
           <column/>
@@ -112,8 +113,8 @@
           <row align="center">
             <spacer flex="1"/>
             <hbox align="center">
-              <button id="buttonSigninAdv"
-                label="Sign In"
+              <button id="buttonAdvNext"
+                label="Next"
                 oncommand="fxAccountSetup.onClick(event.target);"/>
               <label value="or"/>
               <a id="linkCreateAccount"
@@ -124,6 +125,37 @@
         </row>
         </rows>
       </grid>
+    </vbox>
+  </screen>
+
+  <screen id="AdvancedSigninPrefs" collapsed="true">
+    <vbox align="center">
+      <spacer flex="1"/>
+      <label class="header" value="Advanced Sign In"/>
+      <label value="Advanced: Select what to Sync"/>
+      <spacer flex="1"/>
+      <label value="Choose what to sync:"/>
+      <grid>
+        <columns>
+          <column/>
+          <column/>
+          <column/>
+        </columns>
+        <rows>
+          <row><spacer flex="1"/><checkbox id="checkbox-bookmarks"/><label value="Bookmarks"/></row>
+          <row><spacer flex="1"/><checkbox id="checkbox-history"/><label value="History"/></row>
+          <row><spacer flex="1"/><checkbox id="checkbox-tabs"/><label value="Open Tabs"/></row>
+          <row><spacer flex="1"/><checkbox id="checkbox-passwords"/><label value="Passwords"/></row>
+          <row><spacer flex="1"/><checkbox id="checkbox-Preferences"/><label value="Preferences"/></row>
+        </rows>
+      </grid>
+      <label value="Choose encryption option:"/>
+      <radiogroup>
+        <radio id="default-selection" label="Default encryption"/>
+        <radio id="passphrase-selection" label="Passphrase option"/>
+      </radiogroup>
+      <textbox id="input-passphrase"/>
+      <button id="buttonAdvSignin" label="Sign In" onclick="fxAccountSetup.onClick(event.target);"/>
     </vbox>
   </screen>
 

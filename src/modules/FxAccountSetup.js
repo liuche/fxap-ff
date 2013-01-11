@@ -12,17 +12,18 @@ const ADV_SIGNIN   = 2;
 const SUCCESS_PAGE = 3;
 const CREATE_PAGE  = 4;
 const CONFIRM_PAGE = 5;
+const ADV_PREFS    = 6;
 
-const pageIds = ["InitialSigninPage", "BasicSigninPage", "AdvancedSigninPage", "SuccessPage", "CreateAccountPage", "ConfirmAccountPage"];
+const pageIds = ["InitialSigninPage", "BasicSigninPage", "AdvancedSigninPage", "SuccessPage", "CreateAccountPage", "ConfirmAccountPage", "AdvancedSigninPrefs"];
 
 const flowGraph = {"buttonNewAccount" : CREATE_PAGE,
                    "buttonExistingAccount" : BASIC_SIGNIN,
                    "linkAdvSignin" : ADV_SIGNIN,
                    "buttonSignIn" : 3,
-                   "buttonSignInAdv" : 0,
+                   "buttonAdvSignin" : SUCCESS_PAGE,
                    "linkForgotPassword" : 0,
                    "linkCreateAccount" : CREATE_PAGE,
-                   "buttonSigninAdv" : ADV_SIGNIN,
+                   "buttonAdvNext" : ADV_PREFS,
                    "buttonSignout" : 0,
                    "linkSignIn" : BASIC_SIGNIN,
                    "buttonCreate" : CONFIRM_PAGE
@@ -44,6 +45,7 @@ function main() {
 this.FxAccountSetup = function FxAccountSetup() {
   this.selectedTab = null;
   this.currentPage = null;
+  this.credentials = null; // Wrap in some way.
 };
 
 FxAccountSetup.prototype = {
